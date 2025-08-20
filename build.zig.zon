@@ -1,7 +1,7 @@
 .{
     .name = .pubsub,
     .version = "0.0.1",
-    .minimum_zig_version = "0.15.0-dev.1593+399bace2f",
+    .minimum_zig_version = "0.15.0",
     .paths = .{""},
     .fingerprint = 0xbdbea79b050148b0,
 }
