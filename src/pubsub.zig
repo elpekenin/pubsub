@@ -38,11 +38,11 @@ fn Subscriptions(comptime Event: type) type {
         const tag = @field(Tag(Event), field.name);
         const T = std.ArrayList(CallbackFn(Event, tag));
 
-        fields = fields ++ &[_]Type.StructField{
-            .{
+        fields = fields ++ .{
+            Type.StructField{
                 .name = field.name,
                 .type = T,
-                .default_value_ptr = null,
+                .default_value_ptr = &T.empty,
                 .is_comptime = false,
                 .alignment = std.meta.alignment(T),
             },
@@ -84,18 +84,10 @@ pub fn EventBus(comptime Event: type) type {
 
         /// Initialize an instance of the event bus
         pub fn create(allocator: std.mem.Allocator) Self {
-            var self: Self = .{
+            return .{
                 .allocator = allocator,
-                // SAFETY: initialized below
-                .subscriptions = undefined,
+                .subscriptions = .{},
             };
-
-            inline for (eventFields(Event)) |field| {
-                const tag = @field(Tag(Event), field.name);
-                self.callbacksFor(tag).* = .empty;
-            }
-
-            return self;
         }
 
         /// Register a new callback for an event
