@@ -28,7 +28,7 @@ fn eventFields(comptime Event: type) []const Type.EnumField {
 }
 
 /// Create a struct type from the given event type
-/// 
+///
 /// It will have a field for each tag, which will store all callbacks
 /// registered for such tag (in an `ArrayList`)
 fn Subscriptions(comptime Event: type) type {
@@ -99,13 +99,13 @@ pub fn EventBus(comptime Event: type) type {
         }
 
         /// Register a new callback for an event
-        /// 
+        ///
         /// Example:
         /// ```zig
         /// fn loginHandler(user: UserId) void {
         ///     // do something
         /// }
-        /// 
+        ///
         /// try bus.subscribe(.login, loginHandler);
         /// ```
         pub fn subscribe(self: *Self, comptime tag: Tag(Event), callback: CallbackFn(Event, tag)) !void {
